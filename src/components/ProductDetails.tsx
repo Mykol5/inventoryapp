@@ -1,21 +1,22 @@
 // src/components/ProductDetails.tsx
 
 // Import necessary modules and types
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { fetchProductById, Product } from '../redux/slices/productSlice';
+import { fetchProductById } from '../redux/slices/productSlice';
 import { Box, Typography } from '@mui/material';
 
 const ProductDetails: React.FC = () => {
+  const router = useRouter();
+  const { id } = router.query;
   const dispatch = useDispatch();
-  const { id } = useRouter().query;
-  const { selectedProduct, loading, error } = useSelector((state: RootState) => state.products);
+  const { loading, error, selectedProduct } = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchProductById(id as string));
+    if (id && typeof id === 'string') {
+      // dispatch(fetchProductById(id)); // Ensure id is of type string
     }
   }, [id, dispatch]);
 
@@ -34,6 +35,42 @@ const ProductDetails: React.FC = () => {
 };
 
 export default ProductDetails;
+
+
+
+
+// import React, { useEffect } from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { RootState } from '../redux/store';
+// import { fetchProductById, Product } from '../redux/slices/productSlice';
+// import { Box, Typography } from '@mui/material';
+
+// const ProductDetails: React.FC = () => {
+//   const dispatch = useDispatch();
+//   const { id } = useRouter().query;
+//   const { selectedProduct, loading, error } = useSelector((state: RootState) => state.products);
+
+//   useEffect(() => {
+//     if (id) {
+//       dispatch(fetchProductById(id as string));
+//     }
+//   }, [id, dispatch]);
+
+//   if (loading) return <Typography>Loading...</Typography>;
+//   if (error) return <Typography>Error: {error}</Typography>;
+//   if (!selectedProduct) return <Typography>Product not found</Typography>;
+
+//   return (
+//     <Box>
+//       <Typography variant="h4">{selectedProduct.name}</Typography>
+//       <Typography variant="h6">Price: ${selectedProduct.price}</Typography>
+//       <Typography>Description: {selectedProduct.description}</Typography>
+//       <Typography>Quantity: {selectedProduct.quantity}</Typography>
+//     </Box>
+//   );
+// };
+
+// export default ProductDetails;
 
 
 

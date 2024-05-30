@@ -14,7 +14,7 @@ const ProductDetails: React.FC = () => {
 
   useEffect(() => {
     if (!products.length) {
-      dispatch(fetchProducts());
+      // dispatch(fetchProducts());
     }
   }, [dispatch, products.length]);
 
