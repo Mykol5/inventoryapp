@@ -24,14 +24,17 @@ const initialState: ProductState = {
 };
 
 // Create async thunk to fetch a single product by ID
-export const fetchProductById = createAsyncThunk('products/fetchProductById', async (id: string, { rejectWithValue }) => {
-  try {
-    const response = await axios.get(`https://inventory.free.beeceptor.com/api/inventory/${id}`);
-    return response.data;
-  } catch (error) {
-    // return rejectWithValue(message);
+export const fetchProductById = createAsyncThunk(
+  'products/fetchProductById',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`https://inventory.free.beeceptor.com/api/inventory/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue('Failed to fetch product by ID');
+    }
   }
-});
+);
 
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
@@ -82,13 +85,14 @@ const productSlice = createSlice({
       })
       .addCase(deleteProduct.fulfilled, (state, action: PayloadAction<string>) => {
         state.products = state.products.filter((product) => product.id !== action.payload);
+      })
+      .addCase(fetchProductById.fulfilled, (state, action: PayloadAction<Product>) => {
+        state.selectedProduct = action.payload;
       });
   },
 });
 
 export default productSlice.reducer;
-
-
 
 
 

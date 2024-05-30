@@ -1,7 +1,8 @@
 // src/components/ProductForm.tsx
+import { addProduct, updateProduct, Product } from '../redux/slices/productSlice';
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addProduct, updateProduct, Product } from '../redux/slices/productSlice';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 import { CircularProgress, TextField, Button, Box, Typography } from '@mui/material';
 
 interface ProductFormProps {
@@ -11,7 +12,7 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ initialProduct, isUpdate = false, onClose }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const [product, setProduct] = useState<Product>(initialProduct || { id: '', name: '', price: 0, description: '', quantity: 0 });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,9 +33,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialProduct, isUpdate = fa
     setError(null);
     try {
       if (isUpdate) {
-        await dispatch(updateProduct(product)).unwrap();
+        dispatch(updateProduct(product)); // Ensure product has a defined type
       } else {
-        await dispatch(addProduct(product)).unwrap();
+        dispatch(addProduct(product)); // Ensure product has a defined type
       }
       onClose();
     } catch (err) {

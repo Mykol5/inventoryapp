@@ -5,18 +5,19 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 import { fetchProductById } from '../redux/slices/productSlice';
 import { Box, Typography } from '@mui/material';
 
 const ProductDetails: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { loading, error, selectedProduct } = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
     if (id && typeof id === 'string') {
-      // dispatch(fetchProductById(id)); // Ensure id is of type string
+      dispatch(fetchProductById(id)); // Ensure id is of type string
     }
   }, [id, dispatch]);
 

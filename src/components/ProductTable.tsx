@@ -1,8 +1,9 @@
+import { fetchProducts, deleteProduct, Product } from '../redux/slices/productSlice';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, deleteProduct, Product } from '../redux/slices/productSlice';
 import { RootState } from '../redux/store';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, CircularProgress, Button } from '@mui/material';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Link from 'next/link';
@@ -12,7 +13,7 @@ interface ProductTableProps {
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({ onEdit }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { products, loading, error } = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
