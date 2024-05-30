@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, CircularProgress, Button } from '@mui/material';
 import { ThunkDispatch } from '@reduxjs/toolkit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+// import DeleteIcon from '@mui/icons-material/Delete';
+// import EditIcon from '@mui/icons-material/Edit';
+// import { IonIcon } from '@ionic/react';
+// import { trashOutline, pencilOutline } from 'ionicons/icons';
 import Link from 'next/link';
 
 interface ProductTableProps {
@@ -49,10 +51,10 @@ const ProductTable: React.FC<ProductTableProps> = ({ onEdit }) => {
               <TableCell>{product.quantity}</TableCell>
               <TableCell>
                 <IconButton onClick={() => onEdit(product)}>
-                  <EditIcon />
+                  <img src="/icons/edit.svg" alt="Edit Icon" />
                 </IconButton>
                 <IconButton onClick={() => handleDelete(product.id)}>
-                  <DeleteIcon />
+                  <img src="/icons/delete.svg" alt="Delete Icon" />
                 </IconButton>
               </TableCell>
               <TableCell>
