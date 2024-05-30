@@ -14,6 +14,7 @@ interface ProductState {
   products: Product[];
   loading: boolean;
   error: string | null;
+  selectedProduct?: Product; // Include selectedProduct as an optional property
 }
 
 const initialState: ProductState = {
