@@ -1,6 +1,3 @@
-// src/components/ProductDetails.tsx
-
-// Import necessary modules and types
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,21 +7,30 @@ import { fetchProductById } from '../redux/slices/productSlice';
 import { Box, Typography } from '@mui/material';
 
 const ProductDetails: React.FC = () => {
+  // Use Next.js router to access the current route parameters
   const router = useRouter();
+  // Extract id parameter from the route query
   const { id } = router.query;
+  
+  // Set up Redux dispatch with proper ThunkDispatch typing
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  
+  // Get loading state, error message, and selected product from Redux store
   const { loading, error, selectedProduct } = useSelector((state: RootState) => state.products);
 
+  // Fetch product details when id changes
   useEffect(() => {
     if (id && typeof id === 'string') {
-      dispatch(fetchProductById(id)); // Ensure id is of type string
+      dispatch(fetchProductById(id)); // Fetch the product by id if it exists and is a string
     }
   }, [id, dispatch]);
 
-  if (loading) return <Typography>Loading...</Typography>;
-  if (error) return <Typography>Error: {error}</Typography>;
-  if (!selectedProduct) return <Typography>Product not found</Typography>;
+  // Render loading, error, or product details based on state
+  if (loading) return <Typography>Loading...</Typography>; // Show loading indicator
+  if (error) return <Typography>Error: {error}</Typography>; // Show error message
+  if (!selectedProduct) return <Typography>Product not found</Typography>; // Show 'not found' message if product is not found
 
+  // Render product details
   return (
     <Box>
       <Typography variant="h4">{selectedProduct.name}</Typography>
@@ -36,83 +42,3 @@ const ProductDetails: React.FC = () => {
 };
 
 export default ProductDetails;
-
-
-
-
-// import React, { useEffect } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { RootState } from '../redux/store';
-// import { fetchProductById, Product } from '../redux/slices/productSlice';
-// import { Box, Typography } from '@mui/material';
-
-// const ProductDetails: React.FC = () => {
-//   const dispatch = useDispatch();
-//   const { id } = useRouter().query;
-//   const { selectedProduct, loading, error } = useSelector((state: RootState) => state.products);
-
-//   useEffect(() => {
-//     if (id) {
-//       dispatch(fetchProductById(id as string));
-//     }
-//   }, [id, dispatch]);
-
-//   if (loading) return <Typography>Loading...</Typography>;
-//   if (error) return <Typography>Error: {error}</Typography>;
-//   if (!selectedProduct) return <Typography>Product not found</Typography>;
-
-//   return (
-//     <Box>
-//       <Typography variant="h4">{selectedProduct.name}</Typography>
-//       <Typography variant="h6">Price: ${selectedProduct.price}</Typography>
-//       <Typography>Description: {selectedProduct.description}</Typography>
-//       <Typography>Quantity: {selectedProduct.quantity}</Typography>
-//     </Box>
-//   );
-// };
-
-// export default ProductDetails;
-
-
-
-
-
-
-
-
-
-// import { useRouter } from 'next/router';
-// import { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { RootState } from '../redux/store';
-// import { fetchProducts, Product } from '../redux/slices/productSlice';
-// import { Box, Typography } from '@mui/material';
-
-// const ProductDetails: React.FC = () => {
-//   const router = useRouter();
-//   const { id } = router.query;
-//   const dispatch = useDispatch();
-//   const { products, loading, error } = useSelector((state: RootState) => state.products);
-//   const product = products.find((p: Product) => p.id === id);
-
-//   useEffect(() => {
-//     if (!products.length) {
-//       dispatch(fetchProducts());
-//     }
-//   }, [dispatch, products.length]);
-
-//   if (loading) return <Typography>Loading...</Typography>;
-//   if (error) return <Typography>Error: {error}</Typography>;
-//   if (!product) return <Typography>Product not found</Typography>;
-
-//   return (
-//     <Box>
-//       <Typography variant="h4">{product.name}</Typography>
-//       <Typography variant="h6">Price: ${product.price}</Typography>
-//       <Typography>Description: {product.description}</Typography>
-//       <Typography>Quantity: {product.quantity}</Typography>
-//     </Box>
-//   );
-// };
-
-// export default ProductDetails;

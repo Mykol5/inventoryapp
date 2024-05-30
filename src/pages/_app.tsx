@@ -1,4 +1,3 @@
-// src/pages/_app.tsx
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import { AppProps } from 'next/app';
