@@ -20,15 +20,15 @@ This is a simple inventory management system built using Next.js, Redux Toolkit,
 
 ### Prerequisites
 
-- Node.js (v14.x or later)
-- npm (v6.x or later) or yarn (v1.x or later)
+- Node.js (v18.17.0 or later)
+- npm (v10.8.0 or later) or yarn (v1.x or later)
 
 ### Installation
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/inventory-management-system.git
-    cd inventory-management-system
+    git clone https://github.com/Mykol5/inventoryapp.git
+    cd inventory-app
     ```
 
 2. Install dependencies:
